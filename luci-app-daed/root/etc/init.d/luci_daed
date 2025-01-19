@@ -2,7 +2,7 @@
 # Copyright (C) 2023 Tianling Shen <cnsztl@immortalwrt.org>
 
 USE_PROCD=0
-START=99
+START=98
 
 CONF="daed"
 PROG="/usr/bin/daed"
@@ -24,6 +24,7 @@ delcron() {
 }
 
 start_service() {
+  [ -f "/etc/init.d/daed" ] && grep -q "DAE_LOCATION_ASSET" "/etc/init.d/daed" || sed -i '/run/i\  procd_set_param env DAE_LOCATION_ASSET="/usr/share/v2ray"' "/etc/init.d/daed"
   config_load "$CONF"
 
   local enabled
